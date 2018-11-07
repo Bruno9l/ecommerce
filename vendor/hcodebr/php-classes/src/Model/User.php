@@ -196,7 +196,6 @@ class User extends Model
 
 			$results2 = $sql->select(		
 				"CALL sp_userspasswordsrecoveries_create(:iduser, :desip", array(
-
 				":iduser"	=>$data["iduser"],
 				":desip"	=>$_SERVER["REMOTE_ADDR"]
 			));
@@ -306,6 +305,19 @@ class User extends Model
 	public static function setErrorRegister($msg)
 	{
 		$_SESSION[User::ERROR_REGISTER] = $msg;
+	}
+
+	public static function getErrorRegister()
+	{
+		$msg = (isset($_SESSION[User::ERROR_REGISTER]) && $_SESSION[User::ERROR_REGISTER]) ? $_SESSION[User::ERROR_REGISTER] : '';
+
+		User::clearErrorRegister();
+		return $msg;
+	}
+
+	public static function clearErrorRegister()
+	{
+		$_SESSION[User::ERROR_REGISTER] = NULL;
 	}
 
 	public static function checkLoginExists($login)
