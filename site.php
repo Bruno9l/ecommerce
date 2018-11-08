@@ -145,9 +145,19 @@ $app->get("/checkout", function(){
 
 	User::verifyLogin(false);
 
-	$cart = Cart::getFromSession();
-
 	$address = new Address();
+	$cart = Cart::getFromSession();	
+
+	if(isset($_GET['zipcode'])){
+
+		$address->loadFromCEP($_GET['zipcode']);
+
+		$cart->setdeszipcode($_GET['zipcode']);
+
+		$cart->save();
+
+		$cart->getCalculateTotal();
+	}
 
 	$page = new Page();
 
@@ -157,6 +167,13 @@ $app->get("/checkout", function(){
 		'address'=>$address->getValues()
 
 	]);
+
+});
+
+$app->post("/checkout", function(){
+
+
+
 
 });
 
@@ -351,9 +368,7 @@ $app->post("/profile", function(){
 			header('Location: /profile');
 			exit;
 		}
-	}
-
-	
+	}	
 
 	$_POST['inadmin'] = $user->getinadmin();
 	$_POST['despassword'] = $user->getdespassword();

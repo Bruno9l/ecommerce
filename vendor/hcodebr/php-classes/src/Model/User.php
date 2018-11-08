@@ -309,14 +309,7 @@ class User extends Model
 	}
 
 
-
-
-
-
-
-
-
-public static function setSuccess($msg)
+	public static function setSuccess($msg)
 	{
 		$_SESSION[User::SUCCESS] = $msg;
 	}
@@ -334,17 +327,6 @@ public static function setSuccess($msg)
 	{
 		$_SESSION[User::SUCCESS] = NULL;
 	}
-
-
-
-
-
-
-
-
-
-
-
 
 
 	public static function setErrorRegister($msg)
